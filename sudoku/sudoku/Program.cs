@@ -7,7 +7,7 @@ namespace sudoku
     internal class Program
     {
         static void Main(string[] args)
-        {
+        { // TEST
             string[] tempInput = Console.ReadLine().Split(' ');
             List<int> input = new List<int>();
             foreach (string line in tempInput)
