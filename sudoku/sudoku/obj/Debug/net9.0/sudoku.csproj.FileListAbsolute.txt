@@ -1,0 +1,15 @@
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/bin/Debug/net9.0/sudoku
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/bin/Debug/net9.0/sudoku.deps.json
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/bin/Debug/net9.0/sudoku.runtimeconfig.json
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/bin/Debug/net9.0/sudoku.dll
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/bin/Debug/net9.0/sudoku.pdb
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/sudoku.GeneratedMSBuildEditorConfig.editorconfig
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfoInputs.cache
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfo.cs
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/sudoku.csproj.CoreCompileInputs.cache
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/sudoku.sourcelink.json
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/sudoku.dll
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/refint/sudoku.dll
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/sudoku.pdb
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/sudoku.genruntimeconfig.cache
+/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/Debug/net9.0/ref/sudoku.dll
