@@ -27,7 +27,7 @@ namespace sudoku
                 for (int n=0; n < 9; n++)
                 {
                     blok.Add(input[n*(i)]);
-                }
+                }//test
                 ht.Add(i, blok);
             }
         }

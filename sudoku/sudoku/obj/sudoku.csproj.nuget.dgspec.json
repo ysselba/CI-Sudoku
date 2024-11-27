@@ -1,27 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/sudoku.csproj": {}
+    "C:\\Users\\mkrou\\Documents\\GitHub\\CI-Sudoku\\sudoku\\sudoku\\sudoku.csproj": {}
   },
   "projects": {
-    "/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/sudoku.csproj": {
+    "C:\\Users\\mkrou\\Documents\\GitHub\\CI-Sudoku\\sudoku\\sudoku\\sudoku.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/sudoku.csproj",
+        "projectUniqueName": "C:\\Users\\mkrou\\Documents\\GitHub\\CI-Sudoku\\sudoku\\sudoku\\sudoku.csproj",
         "projectName": "sudoku",
-        "projectPath": "/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/sudoku.csproj",
-        "packagesPath": "/home/bramlos/.nuget/packages/",
-        "outputPath": "/home/bramlos/Documents/GitHub/CI-Sudoku/sudoku/sudoku/obj/",
+        "projectPath": "C:\\Users\\mkrou\\Documents\\GitHub\\CI-Sudoku\\sudoku\\sudoku\\sudoku.csproj",
+        "packagesPath": "C:\\Users\\mkrou\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mkrou\\Documents\\GitHub\\CI-Sudoku\\sudoku\\sudoku\\obj\\",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/bramlos/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\mkrou\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "/usr/lib64/dotnet/library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,7 +42,7 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -55,12 +59,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
