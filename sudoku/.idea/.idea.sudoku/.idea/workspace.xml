@@ -8,10 +8,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f47ca9cb-fc29-4ac2-9c78-4e39bf825395" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.sudoku/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.sudoku/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sudoku/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/bin/Debug/net9.0/sudoku.dll" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/bin/Debug/net9.0/sudoku.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/bin/Debug/net9.0/sudoku.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/bin/Debug/net9.0/sudoku.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/ref/sudoku.dll" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/ref/sudoku.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/refint/sudoku.dll" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/refint/sudoku.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sudoku/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.dll" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.sourcelink.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +86,7 @@
       <option name="presentableId" value="Default" />
       <updated>1732718725270</updated>
       <workItem from="1732718726903" duration="419000" />
+      <workItem from="1733239968293" duration="2414000" />
     </task>
     <servers />
   </component>
