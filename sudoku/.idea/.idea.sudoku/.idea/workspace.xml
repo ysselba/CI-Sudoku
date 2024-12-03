@@ -8,7 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f47ca9cb-fc29-4ac2-9c78-4e39bf825395" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/Debug/net9.0/sudoku.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sudoku/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/sudoku/obj/rider.project.model.nuget.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +23,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../../../Program.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
