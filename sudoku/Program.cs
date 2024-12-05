@@ -30,12 +30,14 @@ namespace sudoku
             s.Print();
             Console.WriteLine("");
             SudokuSolver ss = new SudokuSolver(s);
-            for (int i = 0; i < 100; i++)
+            int count = 0;
+            while (!(ss.Columns.Sum() == 0 && ss.Rows.Sum() == 0) && count < 99999)
             {
                 ss.RandomBlockSwap();
+                count++;
             }
             s.Print();
-            //while loop tot max value of opgelost met counter en ss.RandomBlockSwap
+            Console.WriteLine($"\nCount: {count}");
         }
 
         

@@ -18,13 +18,13 @@ namespace sudoku
 
         public Swap(int x1, int y1, int x2, int y2, SudokuSolver solver)
         {
-            x1 = x1;
-            x2 = x2;
-            y1 = y1;
-            y2 = y2;
+            this.x1 = x1;
+            this.x2 = x2;
+            this.y1 = y1;
+            this.y2 = y2;
             ss = solver;
-            v1 = ss._sudoku.Board[x2, y2];
-            v2 = ss._sudoku.Board[x1, y1];
+            v1 = ss._sudoku.Board[this.x2, this.y2];
+            v2 = ss._sudoku.Board[this.x1, this.y1];
             calcScore();
         }
 
