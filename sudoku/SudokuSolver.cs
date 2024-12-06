@@ -70,18 +70,14 @@ namespace sudoku
             for (int i = 0; i < swaps.Count; i++)
             {
                 int score = swaps[i].score;
-                if (score <= swapScore)
+                if (score < swapScore)
                 {
                     swapScore = score;
                     swapIndex = i;
                 }
             }
 
-            if (swapIndex == -1)
-            {
-                Console.WriteLine("No swap found");
-            }
-            else
+            if (swapIndex >= 0)
             {
                 swaps[swapIndex].preformSwap();
             }

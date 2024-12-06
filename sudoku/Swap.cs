@@ -67,10 +67,10 @@ namespace sudoku
             //update values in board, rows, cols
             ss._sudoku.Board[x1, y1] = v1;
             ss._sudoku.Board[x2, y2] = v2;
-            ss.Rows[x1] += x1s;
-            ss.Columns[y1] += y1s;
-            ss.Rows[x2] += x2s;
-            ss.Columns[y2] += y2s;
+            ss.Rows[x1] = x1s;
+            ss.Columns[y1] = y1s;
+            ss.Rows[x2] = x2s;
+            ss.Columns[y2] = y2s;
         }
     }
 }
