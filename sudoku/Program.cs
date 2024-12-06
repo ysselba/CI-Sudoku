@@ -58,7 +58,7 @@ namespace sudoku
                 
                 //Console.WriteLine($"{newColSum} {newRowSum}");
                 if (newColSum == colSum && newRowSum == rowSum) plateauCount++;
-                count++;
+                else count++;
                 
                 colSum = newColSum;
                 rowSum = newRowSum;
