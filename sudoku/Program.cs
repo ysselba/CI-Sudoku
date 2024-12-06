@@ -34,13 +34,14 @@ namespace sudoku
             int colSum = ss.Columns.Sum();
             int rowSum = ss.Rows.Sum();
             
-            while (colSum + rowSum != 0 && count < 100)
+            while (colSum + rowSum != 0 && count < 1000)
             {
                 ss.RandomBlockSwap();
                 count++;
                 //gaat nog iets mis omdat het alleen maar groter wordt
                 colSum = ss.Columns.Sum();
                 rowSum = ss.Rows.Sum();
+                //Console.WriteLine($"{colSum} {rowSum}");
             }
             s.Print();
             Console.WriteLine($"\nCount: {count}");

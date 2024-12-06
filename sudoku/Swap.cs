@@ -34,8 +34,11 @@ namespace sudoku
             y1s = calcSwap(y1,v1, true);
             x2s = calcSwap(x2,v2, false);
             y2s = calcSwap(y2,v2, true);
-            int totalNew = x1s + y1s + x2s + y2s;
-            int totalOld = ss.Rows[y1] + ss.Columns[x1] + ss.Rows[y2] + ss.Columns[x2];
+
+            int totalNew;
+            int totalOld;
+            totalNew = x1s + y1s + x2s + y2s;
+            totalOld = ss.Rows[x1] + ss.Columns[y1] + ss.Rows[x2] + ss.Columns[y2];
             score = totalNew - totalOld;
         }
         
@@ -48,11 +51,11 @@ namespace sudoku
             {
                 if (isColumn)
                 {
-                    newL[i] = ss._sudoku.Board[i,j];
+                    newL[i] = ss._sudoku.Board[j,i];
                 }
                 else
                 {
-                    newL[i] = ss._sudoku.Board[j,i];
+                    newL[i] = ss._sudoku.Board[i,j];
                 }
                 
             }
