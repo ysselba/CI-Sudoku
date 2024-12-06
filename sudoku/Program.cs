@@ -30,13 +30,13 @@ namespace sudoku
             s.Print();
             Console.WriteLine("");
             SudokuSolver ss = new SudokuSolver(s);
-            int S = 10;
+            int S = 20;
             int plateau = 10;
             int count = 0;
             int plateauCount = 0;
             int colSum = ss.Columns.Sum();
             int rowSum = ss.Rows.Sum();
-            
+            Console.WriteLine($"{colSum} {rowSum}");
             while (colSum + rowSum != 0 && count < 9999)
             {
                 ss.RandomBlockSwap();
@@ -44,8 +44,8 @@ namespace sudoku
                 //gaat nog iets mis omdat het alleen maar groter wordt
                 int newColSum = ss.Columns.Sum();
                 int newRowSum = ss.Rows.Sum();
-                Console.WriteLine($"{colSum} {rowSum}");
-                if (newRowSum == colSum && newColSum == rowSum) plateauCount++;
+                //Console.WriteLine($"{colSum} {rowSum}");
+                if (newColSum == colSum && newRowSum == rowSum) plateauCount++;
                 colSum = newColSum;
                 rowSum = newRowSum;
                 if (plateauCount >= plateau)
@@ -55,6 +55,7 @@ namespace sudoku
                 }
             }
             s.Print();
+            Console.WriteLine($"{colSum} {rowSum}");
             Console.WriteLine($"\nCount: {count}");
         }
     }
