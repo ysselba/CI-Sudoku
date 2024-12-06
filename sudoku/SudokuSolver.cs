@@ -83,31 +83,46 @@ namespace sudoku
             }
         }
 
-        public void ZoekoperatorToepassen(int s)
+        public void randomWalk(int s)
         {
-            int aantaluitvoeringen = 0;
-            Random random = new Random();
-            List<Swap> randomswaps = new List<Swap>();
-            while (aantaluitvoeringen < s)
+            while (s > 0)
             {
+                Swap swap = randomSwap();
+                swap.preformSwap();
+                s--;
+            }
+        }
+
+        public Swap randomSwap()
+        {
+            bool validSwap = false;
+            Random random = new Random();
+            Swap s = null;
+            while (!validSwap)
+            {
+                //random block
                 int blockX = random.Next(0, 3) * 3;
                 int blockY = random.Next(0, 3) * 3;
-                // 
+                
+                //random cells
                 int celX = random.Next(0, 3);
                 int celY = random.Next(0, 3);
-                int nieuwrandomX = blockX + celX;
-                int nieuwrandomY = blockY + celY;
                 int celX2 = random.Next(0, 3);
                 int celY2 = random.Next(0, 3);
-                int nieuwrandomX2 = blockX + celX2;
-                int nieuwrandomY2 = blockY + celY2;
-                if (!(nieuwrandomX = nieuwrandomX2) && (nieuwrandomY = nieuwrandomY2))
-                {
-                    randomswaps.Add(new Swap(nieuwrandomX, nieuwrandomY, nieuwrandomX2, nieuwrandomY2, this));
-                }
-                aantaluitvoeringen++;
-                // Rekening houden met gefixeerde blokken
+                
+                //calc coords
+                int rX = blockX + celX;
+                int rY = blockY + celY;
+                int rX2 = blockX + celX2;
+                int rY2 = blockY + celY2;
+                
+                //swap if valid
+                validSwap = rX != rX2 && rY != rY2 && !_sudoku.Gefixeerd[rX, rY] && !_sudoku.Gefixeerd[rX2, rY2];
+                if (validSwap) s = new Swap(rX, rY, rX2, rY2, this);
+                
             }
+            
+            return s;
         }
 
         public void PrintRowCol()
