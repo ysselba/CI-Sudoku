@@ -83,6 +83,33 @@ namespace sudoku
             }
         }
 
+        public void ZoekoperatorToepassen(int s)
+        {
+            int aantaluitvoeringen = 0;
+            Random random = new Random();
+            List<Swap> randomswaps = new List<Swap>();
+            while (aantaluitvoeringen < s)
+            {
+                int blockX = random.Next(0, 3) * 3;
+                int blockY = random.Next(0, 3) * 3;
+                // 
+                int celX = random.Next(0, 3);
+                int celY = random.Next(0, 3);
+                int nieuwrandomX = blockX + celX;
+                int nieuwrandomY = blockY + celY;
+                int celX2 = random.Next(0, 3);
+                int celY2 = random.Next(0, 3);
+                int nieuwrandomX2 = blockX + celX2;
+                int nieuwrandomY2 = blockY + celY2;
+                if (!(nieuwrandomX = nieuwrandomX2) && (nieuwrandomY = nieuwrandomY2))
+                {
+                    randomswaps.Add(new Swap(nieuwrandomX, nieuwrandomY, nieuwrandomX2, nieuwrandomY2, this));
+                }
+                aantaluitvoeringen++;
+                // Rekening houden met gefixeerde blokken
+            }
+        }
+
         public void PrintRowCol()
         {
             string rs = "";
