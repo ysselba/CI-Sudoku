@@ -48,7 +48,7 @@ namespace sudoku
             int colSum = ss.Columns.Sum();
             int rowSum = ss.Rows.Sum();
             //Console.WriteLine($"{colSum} {rowSum}");
-            while (colSum + rowSum != 0 && count < 400000)
+            while (colSum + rowSum != 0)// && count < 400000)
             {
                 ss.RandomBlockSwap();
                 
