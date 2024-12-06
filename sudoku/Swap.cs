@@ -7,15 +7,20 @@ namespace sudoku
         public int y1;
         public int x2;
         public int y2;
+        //total score
         public int score;
+        //score per coord and row col combination
         public int x1s;
         public int y1s;
         public int x2s;
         public int y2s;
+        //the value it should be updated to
         public int v1;
         public int v2;
+        //the solver
         private SudokuSolver ss;
 
+        //create a swap
         public Swap(int x1, int y1, int x2, int y2, SudokuSolver solver)
         {
             this.x1 = x1;
@@ -23,17 +28,21 @@ namespace sudoku
             this.y1 = y1;
             this.y2 = y2;
             ss = solver;
+            //give the coord the new swaped value
             v1 = ss._sudoku.Board[this.x2, this.y2];
             v2 = ss._sudoku.Board[this.x1, this.y1];
+            //calc the score for the rows, cols, total
             calcScore();
         }
 
         private void calcScore()
         {
-            x1s = calcSwap(x1, v1, false);//changed value so that they actually swap
-            y1s = calcSwap(y1,v1, true);
-            x2s = calcSwap(x2,v2, false);
-            y2s = calcSwap(y2,v2, true);
+            //calculate the new score for the row or col
+            //for a row the x is static and for col the y is static
+            y1s = calcSwap(y1, x1, v1, true);
+            x1s = calcSwap(x1, y1, v1, false);
+            y2s = calcSwap(y2, x2, v2, true);
+            x2s = calcSwap(x2, y2, v2, false);
 
             int totalNew;
             int totalOld;
@@ -42,27 +51,23 @@ namespace sudoku
             score = totalNew - totalOld;
         }
         
-        private int calcSwap(int j, int v, bool isColumn)
+        private int calcSwap(int placeNew, int placeRowCol , int newValue, bool isColumn)
         {
-            int newTotal = 0;
-            
             int[] newL = new int[9];
             for (int i = 0; i < 9; i++)
             {
                 if (isColumn)
                 {
-                    newL[i] = ss._sudoku.Board[j,i];
+                    newL[i] = ss._sudoku.Board[placeRowCol,i];
                 }
                 else
                 {
-                    newL[i] = ss._sudoku.Board[i,j];
+                    newL[i] = ss._sudoku.Board[i,placeRowCol];
                 }
                 
             }
-            newL[j] = v;
-            newTotal += 9 - newL.Distinct().Count();
-
-            return newTotal;
+            newL[placeNew] = newValue;
+            return 9 - newL.Distinct().Count();
         }
 
         public void preformSwap()

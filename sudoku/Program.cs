@@ -21,33 +21,48 @@ namespace sudoku
          * 8 0 0 | 2 0 3 | 0 0 9
          * 0 0 5 | 0 1 0 | 3 0 0
          *
-         * 
+         * 253|129|638
+         * 968|345|251
+         * 471|876|479
+         * -----------
+         * 138|142|936
+         * 749|359|148
+         * 256|768|257
+         * -----------
+         * 142|659|527
+         * 869|273|149
+         * 375|418|368
+         *  
          */
         public static void Main(string[] args)
         {
             string[] input = Console.ReadLine().Split(' ');
             Sudoku s = new Sudoku(input);
-            s.Print();
-            Console.WriteLine("");
+            //s.Print();
+            //Console.WriteLine("");
             SudokuSolver ss = new SudokuSolver(s);
-            int S = 20;
+            int S = 1;
             int plateau = 10;
             int count = 0;
             int plateauCount = 0;
             int colSum = ss.Columns.Sum();
             int rowSum = ss.Rows.Sum();
-            Console.WriteLine($"{colSum} {rowSum}");
-            while (colSum + rowSum != 0 && count < 9999)
+            //Console.WriteLine($"{colSum} {rowSum}");
+            while (colSum + rowSum != 0 && count < 400000)
             {
                 ss.RandomBlockSwap();
-                count++;
+                
                 //gaat nog iets mis omdat het alleen maar groter wordt
                 int newColSum = ss.Columns.Sum();
                 int newRowSum = ss.Rows.Sum();
-                //Console.WriteLine($"{colSum} {rowSum}");
+                
+                //Console.WriteLine($"{newColSum} {newRowSum}");
                 if (newColSum == colSum && newRowSum == rowSum) plateauCount++;
+                count++;
+                
                 colSum = newColSum;
                 rowSum = newRowSum;
+                
                 if (plateauCount >= plateau)
                 {
                     ss.randomWalk(S);
