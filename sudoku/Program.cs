@@ -31,17 +31,19 @@ namespace sudoku
             Console.WriteLine("");
             SudokuSolver ss = new SudokuSolver(s);
             int count = 0;
-            while (!(ss.Columns.Sum() == 0 && ss.Rows.Sum() == 0) && count < 99999)
+            int colSum = ss.Columns.Sum();
+            int rowSum = ss.Rows.Sum();
+            
+            while (colSum + rowSum != 0 && count < 99999)
             {
                 ss.RandomBlockSwap();
                 count++;
+                //gaat nog iets mis omdat het alleen maar groter wordt
+                colSum = ss.Columns.Sum();
+                rowSum = ss.Rows.Sum();
             }
             s.Print();
             Console.WriteLine($"\nCount: {count}");
         }
-
-        
-
-        
     }
 }

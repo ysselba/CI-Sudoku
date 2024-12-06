@@ -66,11 +66,11 @@ namespace sudoku
             
             //kijk welke swap het beste is
             int swapIndex = -1;
-            int swapScore = int.MaxValue;
+            int swapScore = 0;
             for (int i = 0; i < swaps.Count; i++)
             {
                 int score = swaps[i].score;
-                if (score < swapScore)
+                if (score <= swapScore)
                 {
                     swapScore = score;
                     swapIndex = i;
