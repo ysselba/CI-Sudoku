@@ -56,15 +56,7 @@ namespace sudoku
             int[] newL = new int[9];
             for (int i = 0; i < 9; i++)
             {
-                if (isColumn)
-                {
-                    newL[i] = ss._sudoku.Board[placeRowCol,i];
-                }
-                else
-                {
-                    newL[i] = ss._sudoku.Board[i,placeRowCol];
-                }
-                
+                newL[i] = isColumn ? ss._sudoku.Board[placeRowCol,i] : ss._sudoku.Board[i,placeRowCol];
             }
             newL[placeNew] = newValue;
             return 9 - newL.Distinct().Count();

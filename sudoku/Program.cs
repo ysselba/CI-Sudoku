@@ -70,9 +70,12 @@ namespace sudoku
                     plateauCount = 0;
                 }
             }
-            Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.")
+
+            Console.WriteLine(
+                $"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.");
             s.Print();
-            Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden en om die te printen.")
+            Console.WriteLine(
+                $"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden en om die te printen.");
             Console.WriteLine($"{colSum} {rowSum}");
             Console.WriteLine($"\nCount: {count}");
             
