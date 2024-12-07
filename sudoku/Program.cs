@@ -36,6 +36,7 @@ namespace sudoku
          */
         public static void Main(string[] args)
         {
+            DateTime datetimebegin = DateTime.Now;
             string[] input = Console.ReadLine().Split(' ');
             Sudoku s = new Sudoku(input);
             //s.Print();
@@ -70,8 +71,10 @@ namespace sudoku
                 }
             }
             s.Print();
+            TimeSpan runtijd = DateTime.Now.Subtract(datetimebegin);
             Console.WriteLine($"{colSum} {rowSum}");
             Console.WriteLine($"\nCount: {count}");
+            Console.WriteLine($"Het duurde {runtijd} om een oplossing te vinden.")
         }
     }
 }
