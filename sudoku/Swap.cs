@@ -53,19 +53,21 @@ namespace sudoku
         
         private int calcSwap(int placeNew, int placeRowCol , int newValue, bool isColumn)
         {
-            Dictionary<int,bool> newDict = new Dictionary<int,bool>();
-            int newDistinct = 0;
+            int[] newL = new int[9];
             for (int i = 0; i < 9; i++)
             {
-                int value = isColumn ? ss._sudoku.Board[placeRowCol, i] : ss._sudoku.Board[i, placeRowCol];
-                if (!newDict.ContainsKey(value))
+                if (isColumn)
                 {
-                    newDict[value] = true;
-                    newDistinct++;
+                    newL[i] = ss._sudoku.Board[placeRowCol,i];
                 }
+                else
+                {
+                    newL[i] = ss._sudoku.Board[i,placeRowCol];
+                }
+                
             }
-            if (!newDict.ContainsKey(newValue)) newDistinct++;
-            return 9 - newDistinct;
+            newL[placeNew] = newValue;
+            return 9 - newL.Distinct().Count();
         }
 
         public void preformSwap()
