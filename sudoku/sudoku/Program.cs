@@ -1,74 +1,104 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
-public class Program
+namespace sudoku
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        string[] tempInput = Console.ReadLine().Split(' ');
-        List<int> input = new List<int>();
-        foreach (string line in tempInput)
+        /* 0 0 3 0 2 0 6 0 0 9 0 0 3 0 5 0 0 1 0 0 1 8 0 6 4 0 0 0 0 8 1 0 2 9 0 0 7 0 0 0 0 0 0 0 8 0 0 6 7 0 8 2 0 0 0 0 2 6 0 9 5 0 0 8 0 0 2 0 3 0 0 9 0 0 5 0 1 0 3 0 0
+         * 
+         * 0 0 3 | 0 2 0 | 6 0 0
+         * 9 0 0 | 3 0 5 | 0 0 1
+         * 0 0 1 | 8 0 6 | 4 0 0
+         * ---------------------
+         * 0 0 8 | 1 0 2 | 9 0 0
+         * 7 0 0 | 0 0 0 | 0 0 8
+         * 0 0 6 | 7 0 8 | 2 0 0
+         * ---------------------
+         * 0 0 2 | 6 0 9 | 5 0 0
+         * 8 0 0 | 2 0 3 | 0 0 9
+         * 0 0 5 | 0 1 0 | 3 0 0
+         *
+         * 253|129|638
+         * 968|345|251
+         * 471|876|479
+         * -----------
+         * 138|142|936
+         * 749|359|148
+         * 256|768|257
+         * -----------
+         * 142|659|527
+         * 869|273|149
+         * 375|418|368
+         *  
+         */
+        public static void Main(string[] args)
         {
-            // Console.Write(line, int.Parse(line));
-            input.Add(int.Parse(line));
-        }
-        Hashtable ht = new Hashtable();
-        for (int i = 0; i < 9; i++)
-        {
-            List<int> blok = new List<int>();
+            List<int> gem = new List<int>();
+            List<TimeSpan> gemTS = new List<TimeSpan>();
+            string[] input = Console.ReadLine().Split(' ');
+            // Sudoku s = new Sudoku(input);
+            //s.Print();
+            //Console.WriteLine("");
+            // SudokuSolver ss = new SudokuSolver(s);
+            // int colSum = ss.Columns.Sum();
+            // int rowSum = ss.Rows.Sum();
+            //Console.WriteLine($"{colSum} {rowSum}");
 
-            // Telkens langs een blok gaan, 2D 3x3
-            for (int p = ((i/3)*3); p < (((i / 3) * 3) + 3); p++)
+            for (int i = 0; i < 2; i++)
             {
-                for (int q = ((i / 3) * 3); q < (((i / 3) * 3) + 3); q++)
+                mechanisme(input, gem, gemTS);
+                Console.WriteLine();
+            }
+            Console.WriteLine(gem.Average());
+            Console.WriteLine(new TimeSpan(Convert.ToInt64(gemTS.Average(t => t.Ticks))));
+        }
+
+        public static void mechanisme(string[] input, List<int> gem, List<TimeSpan> gemTS)
+        {
+            DateTime datetimebegin = DateTime.Now;
+            Sudoku s = new Sudoku(input);
+            SudokuSolver ss = new SudokuSolver(s);
+            int colSum = ss.Columns.Sum();
+            int rowSum = ss.Rows.Sum();
+
+            int S = 1;
+            int plateau = 10;
+            int count = 0;
+            int plateauCount = 0;
+
+            while (colSum + rowSum != 0)// && count < 400000)
+            {
+                ss.RandomBlockSwap();
+
+                //gaat nog iets mis omdat het alleen maar groter wordt
+                int newColSum = ss.Columns.Sum();
+                int newRowSum = ss.Rows.Sum();
+
+                //Console.WriteLine($"{newColSum} {newRowSum}");
+                if (newColSum == colSum && newRowSum == rowSum) plateauCount++;
+                else count++;
+
+                colSum = newColSum;
+                rowSum = newRowSum;
+
+                if (plateauCount >= plateau)
                 {
-                    blok.Add(input[p*3 + q]);
+                    ss.randomWalk(S);
+                    plateauCount = 0;
                 }
             }
-            for (int n = 0; n < 9; n++)
-            {
-                // Coordinaten
-                // blok.Add(input[n + (i*9)]);
-                // Console.WriteLine($"{n}, {i}: {input[n + (i * 9)]}");
-            }
-
-            ht.Add(i, blok);
+            TimeSpan nieuwDT = DateTime.Now.Subtract(datetimebegin);
+            Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.");
+            s.Print();
+            Console.WriteLine(
+                $"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden en om die te printen.");
+            Console.WriteLine($"{colSum} {rowSum}");
+            Console.WriteLine($"\nCount: {count}");
+            gem.Add(count);
+            gemTS.Add(nieuwDT);
         }
-        for (int i = 0; i < 9; i++)
-        {
-            List<int> blok = (List<int>)ht[i];
-            for (int p = 0; p < blok.Count; p++)
-            {
-                // Iteratie van 1 t/m 9, als die niet zit in het blok dan add in lege veld
-                if (blok[p]==0)
-                {
-                    for (int q = 1; q <= 9; q++)
-                    {
-                        if (!blok.Contains(q))
-                        {
-                            blok[p] = q;
-                            break;
-                        }
-                    }
-                }
-            }
-            ht[i] = blok; // Naar de volgende blok
-            //foreach (int cijfer in blok)
-            //{
-            //    for (int p = 1; p <= 9; p++)
-            //    {
-            //        if (cijfer == 0 && !blok.Contains(p))
-            //        {
-            //            blok[cijfer] = p;
-            //        }
-            //    }
-            //}
-        }
-    }
-
-    public class Sudoku
-    {
-        // Klasse body
     }
 }
