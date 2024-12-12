@@ -46,7 +46,7 @@ namespace sudoku
                 mechanisme(input, gem, gemTS);
             }
             Console.WriteLine($"Average amount of iterations: {gem.Average()}");
-            Console.WriteLine($"Average Time in MS: {gemTS.Average(t => t.Milliseconds)}");
+            Console.WriteLine($"Finding the solution takes {gemTS.Average(t => t.Minutes)} minute(s), {gemTS.Average(t => t.Seconds)} second(s) and {gemTS.Average(t => t.Milliseconds)} millisecond(s) on average.");
             
         }
 
