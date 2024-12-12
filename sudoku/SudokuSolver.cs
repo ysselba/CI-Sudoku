@@ -132,7 +132,12 @@ namespace sudoku
                 
                 //swap if valid
                 validSwap = !(rX == rX2 && rY == rY2) && !_sudoku.Gefixeerd[rX, rY] && !_sudoku.Gefixeerd[rX2, rY2];
-                if (validSwap) s = new Swap(rX, rY, rX2, rY2, this);
+                if (validSwap)
+                {
+                    //preform swap
+                    s = new Swap(rX, rY, rX2, rY2, this);
+                    
+                }
                 
             }
             

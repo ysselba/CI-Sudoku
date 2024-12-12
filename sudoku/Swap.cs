@@ -53,13 +53,41 @@ namespace sudoku
         
         private int calcSwap(int placeNew, int placeRowCol , int newValue, bool isColumn)
         {
-            int[] newL = new int[9];
-            for (int i = 0; i < 9; i++)
+            int count = 0;
+            HashSet<int> seen = new HashSet<int>();
+            if (isColumn)
             {
-                newL[i] = isColumn ? ss._sudoku.Board[placeRowCol,i] : ss._sudoku.Board[i,placeRowCol];
+                for (int i = 0; i < 9; i++)
+                {
+                    if (i != placeNew)
+                    {
+                        if (seen.Add(ss._sudoku.Board[placeRowCol,i]))
+                        {
+                            count++;
+                        }
+                    }
+                }
             }
-            newL[placeNew] = newValue;
-            return 9 - newL.Distinct().Count();
+            else
+            {
+                for (int i = 0; i < 9; i++)
+                {
+                    if (i != placeNew)
+                    {
+                        if (seen.Add(ss._sudoku.Board[i,placeRowCol]))
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+
+            if (seen.Add(newValue))
+            {
+                count++;
+            }
+
+            return 9 - count;
         }
 
         public void preformSwap()
@@ -67,10 +95,10 @@ namespace sudoku
             //update values in board, rows, cols
             ss._sudoku.Board[x1, y1] = v1;
             ss._sudoku.Board[x2, y2] = v2;
-            ss.Rows[x1] = x1s;
-            ss.Columns[y1] = y1s;
-            ss.Rows[x2] = x2s;
-            ss.Columns[y2] = y2s;
+            ss.Rows[y1] = x1s;
+            ss.Columns[x1] = y1s;
+            ss.Rows[y2] = x2s;
+            ss.Columns[x2] = y2s;
         }
     }
 }

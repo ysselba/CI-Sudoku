@@ -57,9 +57,12 @@ namespace sudoku
                 int newColSum = ss.Columns.Sum();
                 int newRowSum = ss.Rows.Sum();
                 
-                //Console.WriteLine($"{newColSum} {newRowSum}");
-                if (newColSum == colSum && newRowSum == rowSum) plateauCount++;
-                else count++;
+                if(newColSum + newRowSum == colSum + rowSum) plateauCount++;
+                else
+                {
+                    count++;
+                    plateauCount = 0;
+                }
                 
                 colSum = newColSum;
                 rowSum = newRowSum;
@@ -71,14 +74,29 @@ namespace sudoku
                 }
             }
 
-            Console.WriteLine(
-                $"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.");
+            Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.");
             s.Print();
-            Console.WriteLine(
-                $"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden en om die te printen.");
-            Console.WriteLine($"{colSum} {rowSum}");
-            Console.WriteLine($"\nCount: {count}");
-            
+            //Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden en om die te printen.");
+            //Console.WriteLine($"{colSum} {rowSum}");
+            //Console.WriteLine($"\nCount: {count}");
+
+            /*
+            //test for correctness
+            for (int i = 0; i < 9; i++)
+            {
+                int[] r = new int[9];
+                int[] c = new int[9];
+                for (int j = 0; j < 9; j++)
+                {
+                    r[j] = ss._sudoku.Board[j, i];
+                    c[j] = ss._sudoku.Board[i, j];
+                }
+                //the amount of missing numbers for row or column i
+                int rd = 9 - r.Distinct().Count();
+                int cd = 9 - c.Distinct().Count();
+                Console.WriteLine($"{i}: r:{rd} c:{cd}");
+            }
+            */
         }
     }
 }
