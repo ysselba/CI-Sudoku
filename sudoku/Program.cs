@@ -36,20 +36,34 @@ namespace sudoku
          */
         public static void Main(string[] args)
         {
-            DateTime datetimebegin = DateTime.Now;
             string[] input = Console.ReadLine().Split(' ');
+            List<int> gem = new List<int>();
+            List<TimeSpan> gemTS = new List<TimeSpan>();
+
+            int testFreq = 2;
+            for (int i = 0; i < 2; i++)
+            {
+                mechanisme(input, gem, gemTS);
+            }
+            Console.WriteLine($"Average amount of iterations: {gem.Average()}");
+            Console.WriteLine($"Average Time in MS: {gemTS.Average(t => t.Milliseconds)}");
+            
+        }
+
+        public static void mechanisme(string[] input, List<int> gem, List<TimeSpan> gemTS)
+        {
+            DateTime datetimebegin = DateTime.Now;
             Sudoku s = new Sudoku(input);
-            //s.Print();
-            //Console.WriteLine("");
             SudokuSolver ss = new SudokuSolver(s);
+            int colSum = ss.Columns.Sum();
+            int rowSum = ss.Rows.Sum();
+            
             int S = 1;
             int plateau = 10;
             int count = 0;
             int plateauCount = 0;
-            int colSum = ss.Columns.Sum();
-            int rowSum = ss.Rows.Sum();
-            //Console.WriteLine($"{colSum} {rowSum}");
-            while (colSum + rowSum != 0)// && count < 400000)
+            
+            while (colSum + rowSum != 0)
             {
                 ss.RandomBlockSwap();
                 
@@ -58,11 +72,9 @@ namespace sudoku
                 int newRowSum = ss.Rows.Sum();
                 
                 if(newColSum + newRowSum == colSum + rowSum) plateauCount++;
-                else
-                {
-                    count++;
-                    plateauCount = 0;
-                }
+                else plateauCount = 0;
+                
+                count++;
                 
                 colSum = newColSum;
                 rowSum = newRowSum;
@@ -73,13 +85,18 @@ namespace sudoku
                     plateauCount = 0;
                 }
             }
-
-            Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.");
+            gem.Add(count);
+            gemTS.Add(DateTime.Now - datetimebegin);
             s.Print();
+            if(gemTS.Count > 0) Console.WriteLine($"Time: {gemTS[gemTS.Count - 1]}");
+            Console.WriteLine($"Itterations: {count}\n");
+            
+            
+            //Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.");
+            //s.Print();
             //Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden en om die te printen.");
             //Console.WriteLine($"{colSum} {rowSum}");
             //Console.WriteLine($"\nCount: {count}");
-
             /*
             //test for correctness
             for (int i = 0; i < 9; i++)
@@ -97,6 +114,7 @@ namespace sudoku
                 Console.WriteLine($"{i}: r:{rd} c:{cd}");
             }
             */
+            
         }
     }
 }
