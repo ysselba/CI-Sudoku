@@ -36,12 +36,13 @@ namespace sudoku
          */
         public static void Main(string[] args)
         {
+            //TODO: output in csv betand
             //test vars
             int sMin = 1;
-            int sMax = 2;
-            int plateauMin = 9;
-            int plateauMax = 10;
-            int testFreq = 10;
+            int sMax = 5;
+            int plateauMin = 5;
+            int plateauMax = 15;
+            int testFreq = 10; //TODO: kijk even hoeveel kan
             
             List<string> sudokus = new List<string>
             {
