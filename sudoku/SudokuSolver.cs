@@ -37,15 +37,47 @@ namespace sudoku
                 Columns[i] = 9 - c.Distinct().Count();
             }
         }
-
+        
+        
         public void RandomBlockSwap()
         {
             //get random block x and y
             int blockX = random.Next(0, 3) * 3;
             int blockY = random.Next(0, 3) * 3;
+            int x1 = blockX + random.Next(0, 3);
+            int y1 = blockY + random.Next(0, 3);
+            int x2 = blockX + random.Next(0, 3);
+            int y2 = blockY + random.Next(0, 3);
+            /*
+            bool beter = false;
+            
+            while (!beter)
+            {
+                if (!_sudoku.Gefixeerd[x1, y1] && !_sudoku.Gefixeerd[x2, y2])
+                {
+                    Swap s = new Swap(x1, y1, x2, y2, this);
+                    if (s.score <= 0)
+                    {
+                        beter = true;
+                        s.preformSwap();
+                    }
+                    else
+                    {
+                        blockX = random.Next(0, 3) * 3;
+                        blockY = random.Next(0, 3) * 3;
+                        x1 = blockX + random.Next(0, 3);
+                        y1 = blockY + random.Next(0, 3);
+                        x2 = blockX + random.Next(0, 3);
+                        y2 = blockY + random.Next(0, 3);
+                    }
+                }
+            }*/
             
             //list for all possible swaps in block
             List<Swap> swaps = new List<Swap>();
+
+            
+
             
             //calculate all possible x and y for the first number
             for (int x = blockX; x < blockX + 3; x++)
@@ -71,6 +103,7 @@ namespace sudoku
                     }
                 }
             }
+
             
             //check if there is a better score than the current one
             int swapIndex = -1;
@@ -86,13 +119,15 @@ namespace sudoku
                 }
             }
 
-            //if a swap has been found that is better or equal 
+            //if a swap has been found that is better or equal
             if (swapIndex > -1)
             {
                 Swap sw = swaps[swapIndex];
                 //Console.WriteLine($"{sw.x1},{sw.y1} | {sw.x2},{sw.y2} | {sw.score}");
                 sw.preformSwap();
             }
+
+
         }
 
         //preform a random swap for s times
@@ -136,7 +171,6 @@ namespace sudoku
                 {
                     //preform swap
                     s = new Swap(rX, rY, rX2, rY2, this);
-                    
                 }
                 
             }

@@ -39,20 +39,29 @@ namespace sudoku
             string[] input = Console.ReadLine().Split(' ');
             List<int> gem = new List<int>();
             List<TimeSpan> gemTS = new List<TimeSpan>();
-            List<int> gemaantalkeerPlateau = new List<int>();
+            List<int> gemPlateau = new List<int>();
 
             int testFreq = 2;
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 10; i++)
             {
-                mechanisme(input, gem, gemTS);
+                mechanisme(input, gem, gemTS, gemPlateau, 1, 10);
+                Console.WriteLine($"Sudoku iteration: {i + 1}");
             }
-            Console.WriteLine($"Average amount of iterations: {gem.Average()}");
-            Console.WriteLine($"Finding the solution takes {gemTS.Average(t => t.Minutes)} minute(s), {gemTS.Average(t => t.Seconds)} second(s) and {gemTS.Average(t => t.Milliseconds)} millisecond(s) on average
-            Console.WriteLine($"The average amount of times a random walk has been executed: {gemaantalkeerPlateau}.")
+
+            TimeSpan gemTime = new TimeSpan(0);
+            foreach (TimeSpan t in gemTS)
+            {
+                gemTime += t;
+            }
+            gemTime = gemTime / gemTS.Count;
             
+            Console.WriteLine($"Average amount of iterations: {gem.Average()}");
+            Console.WriteLine($"Avrage Time spent per sudoku (HH:MM:SS): {gemTime}");
+            Console.WriteLine($"The average amount of random walks: {gemPlateau.Average()}.");
+
         }
 
-        public static void mechanisme(string[] input, List<int> gem, List<TimeSpan> gemTS)
+        public static void mechanisme(string[] input, List<int> gem, List<TimeSpan> gemTS, List<int> gemPlateau, int S, int plateau)
         {
             DateTime datetimebegin = DateTime.Now;
             Sudoku s = new Sudoku(input);
@@ -60,8 +69,6 @@ namespace sudoku
             int colSum = ss.Columns.Sum();
             int rowSum = ss.Rows.Sum();
             
-            int S = 1;
-            int plateau = 10;
             int count = 0;
             int plateauCount = 0;
             int aantalkeerPlateau = 0;
@@ -91,13 +98,13 @@ namespace sudoku
             }
             gem.Add(count);
             gemTS.Add(DateTime.Now - datetimebegin);
-            gemaantalkeerPlateau.Add(aantalkeerPlateau);
-            s.Print();
-            if(gemTS.Count > 0) Console.WriteLine($"Time: {gemTS[gemTS.Count - 1]}");
-            Console.WriteLine($"Iterations: {count}\n");
-            Console.WriteLine($"Aantal keer dat een plateau is bereikt: {aantalkeerPlateau}.")
-            
-            
+            gemPlateau.Add(aantalkeerPlateau);
+            //s.Print();
+            //if(gemTS.Count > 0) Console.WriteLine($"Time: {gemTS[gemTS.Count - 1]}");
+            //Console.WriteLine($"Iterations: {count}");
+            //Console.WriteLine($"Aantal keer dat een plateau is bereikt: {aantalkeerPlateau}");
+
+
             //Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.");
             //s.Print();
             //Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden en om die te printen.");
@@ -120,7 +127,7 @@ namespace sudoku
                 Console.WriteLine($"{i}: r:{rd} c:{cd}");
             }
             */
-            
+
         }
     }
 }
