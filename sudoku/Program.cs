@@ -36,16 +36,55 @@ namespace sudoku
          */
         public static void Main(string[] args)
         {
-            string[] input = Console.ReadLine().Split(' ');
+            //test vars
+            int sMin = 1;
+            int sMax = 2;
+            int plateauMin = 9;
+            int plateauMax = 10;
+            int testFreq = 10;
+            
+            List<string> sudokus = new List<string>
+            {
+                "0 0 3 0 2 0 6 0 0 9 0 0 3 0 5 0 0 1 0 0 1 8 0 6 4 0 0 0 0 8 1 0 2 9 0 0 7 0 0 0 0 0 0 0 8 0 0 6 7 0 8 2 0 0 0 0 2 6 0 9 5 0 0 8 0 0 2 0 3 0 0 9 0 0 5 0 1 0 3 0 0",
+                "2 0 0 0 8 0 3 0 0 0 6 0 0 7 0 0 8 4 0 3 0 5 0 0 2 0 9 0 0 0 1 0 5 4 0 8 0 0 0 0 0 0 0 0 0 4 0 2 7 0 6 0 0 0 3 0 1 0 0 7 0 4 0 7 2 0 0 4 0 0 6 0 0 0 4 0 1 0 0 0 3",
+                "0 0 0 0 0 0 9 0 7 0 0 0 4 2 0 1 8 0 0 0 0 7 0 5 0 2 6 1 0 0 9 0 4 0 0 0 0 5 0 0 0 0 0 4 0 0 0 0 5 0 7 0 0 9 9 2 0 1 0 8 0 0 0 0 3 4 0 5 9 0 0 0 5 0 7 0 0 0 0 0 0",
+                "0 3 0 0 5 0 0 4 0 0 0 8 0 1 0 5 0 0 4 6 0 0 0 0 0 1 2 0 7 0 5 0 2 0 8 0 0 0 0 6 0 3 0 0 0 0 4 0 1 0 9 0 3 0 2 5 0 0 0 0 0 9 8 0 0 1 0 2 0 6 0 0 0 8 0 0 6 0 0 2 0",
+                "0 2 0 8 1 0 7 4 0 7 0 0 0 0 3 1 0 0 0 9 0 0 0 2 8 0 5 0 0 9 0 4 0 0 8 7 4 0 0 2 0 8 0 0 3 1 6 0 0 3 0 2 0 0 3 0 2 7 0 0 0 6 0 0 0 5 6 0 0 0 0 8 0 7 6 0 5 1 0 9 0"
+            };
+            foreach (string s in sudokus)
+            {
+                Console.WriteLine($"Sudoku: {s}");
+                Console.WriteLine($"Test Frequency: {testFreq}");
+                testSudokus(s, sMin, sMax, plateauMin, plateauMax, testFreq);
+            }
+
+        }
+
+        public static void testSudokus(string input, int SMin, int SMax, int PlateauMin, int PlateauMax, int testFreq)
+        {
+            string[] list = input.Split(' ');
+
+            for (int  i = SMin; i <= SMax; i++)
+            {
+                for (int j = PlateauMin; j <= PlateauMax; j++)
+                {
+                    Console.WriteLine($"S: {i}, Plateau: {j}");
+                    testSudoku(list, i, j, testFreq);
+                    Console.WriteLine("");
+                }
+            }
+        }
+
+        public static void testSudoku(string[] input, int S, int plateau, int testFreq)
+        {
             List<int> gem = new List<int>();
             List<TimeSpan> gemTS = new List<TimeSpan>();
             List<int> gemPlateau = new List<int>();
-
-            int testFreq = 2;
-            for (int i = 0; i < 10; i++)
+            
+            for (int i = 0; i < testFreq; i++)
             {
-                mechanisme(input, gem, gemTS, gemPlateau, 1, 10);
-                Console.WriteLine($"Sudoku iteration: {i + 1}");
+                mechanisme(input, gem, gemTS, gemPlateau, S, plateau);
+                //Console.WriteLine($"Sudoku iteration: {i + 1}");
             }
 
             TimeSpan gemTime = new TimeSpan(0);
@@ -56,9 +95,8 @@ namespace sudoku
             gemTime = gemTime / gemTS.Count;
             
             Console.WriteLine($"Average amount of iterations: {gem.Average()}");
-            Console.WriteLine($"Avrage Time spent per sudoku (HH:MM:SS): {gemTime}");
-            Console.WriteLine($"The average amount of random walks: {gemPlateau.Average()}.");
-
+            Console.WriteLine($"Average Time spent per sudoku (HH:MM:SS): {gemTime}");
+            Console.WriteLine($"Average amount of random walks: {gemPlateau.Average()}.");
         }
 
         public static void mechanisme(string[] input, List<int> gem, List<TimeSpan> gemTS, List<int> gemPlateau, int S, int plateau)
@@ -99,35 +137,6 @@ namespace sudoku
             gem.Add(count);
             gemTS.Add(DateTime.Now - datetimebegin);
             gemPlateau.Add(aantalkeerPlateau);
-            //s.Print();
-            //if(gemTS.Count > 0) Console.WriteLine($"Time: {gemTS[gemTS.Count - 1]}");
-            //Console.WriteLine($"Iterations: {count}");
-            //Console.WriteLine($"Aantal keer dat een plateau is bereikt: {aantalkeerPlateau}");
-
-
-            //Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.");
-            //s.Print();
-            //Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden en om die te printen.");
-            //Console.WriteLine($"{colSum} {rowSum}");
-            //Console.WriteLine($"\nCount: {count}");
-            /*
-            //test for correctness
-            for (int i = 0; i < 9; i++)
-            {
-                int[] r = new int[9];
-                int[] c = new int[9];
-                for (int j = 0; j < 9; j++)
-                {
-                    r[j] = ss._sudoku.Board[j, i];
-                    c[j] = ss._sudoku.Board[i, j];
-                }
-                //the amount of missing numbers for row or column i
-                int rd = 9 - r.Distinct().Count();
-                int cd = 9 - c.Distinct().Count();
-                Console.WriteLine($"{i}: r:{rd} c:{cd}");
-            }
-            */
-
         }
     }
 }
