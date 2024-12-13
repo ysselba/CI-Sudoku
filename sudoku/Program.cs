@@ -39,6 +39,7 @@ namespace sudoku
             string[] input = Console.ReadLine().Split(' ');
             List<int> gem = new List<int>();
             List<TimeSpan> gemTS = new List<TimeSpan>();
+            List<int> gemaantalkeerPlateau = new List<int>();
 
             int testFreq = 2;
             for (int i = 0; i < 2; i++)
@@ -46,7 +47,8 @@ namespace sudoku
                 mechanisme(input, gem, gemTS);
             }
             Console.WriteLine($"Average amount of iterations: {gem.Average()}");
-            Console.WriteLine($"Finding the solution takes {gemTS.Average(t => t.Minutes)} minute(s), {gemTS.Average(t => t.Seconds)} second(s) and {gemTS.Average(t => t.Milliseconds)} millisecond(s) on average.");
+            Console.WriteLine($"Finding the solution takes {gemTS.Average(t => t.Minutes)} minute(s), {gemTS.Average(t => t.Seconds)} second(s) and {gemTS.Average(t => t.Milliseconds)} millisecond(s) on average
+            Console.WriteLine($"The average amount of times a random walk has been executed: {gemaantalkeerPlateau}.")
             
         }
 
@@ -62,6 +64,7 @@ namespace sudoku
             int plateau = 10;
             int count = 0;
             int plateauCount = 0;
+            int aantalkeerPlateau = 0;
             
             while (colSum + rowSum != 0)
             {
@@ -82,14 +85,17 @@ namespace sudoku
                 if (plateauCount >= plateau)
                 {
                     ss.randomWalk(S);
+                    aantalkeerPlateau++;
                     plateauCount = 0;
                 }
             }
             gem.Add(count);
             gemTS.Add(DateTime.Now - datetimebegin);
+            gemaantalkeerPlateau.Add(aantalkeerPlateau);
             s.Print();
             if(gemTS.Count > 0) Console.WriteLine($"Time: {gemTS[gemTS.Count - 1]}");
-            Console.WriteLine($"Itterations: {count}\n");
+            Console.WriteLine($"Iterations: {count}\n");
+            Console.WriteLine($"Aantal keer dat een plateau is bereikt: {aantalkeerPlateau}.")
             
             
             //Console.WriteLine($"Het duurde ongeveer {DateTime.Now.Subtract(datetimebegin)} om een oplossing te vinden.");
