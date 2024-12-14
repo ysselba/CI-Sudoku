@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace sudoku
 {
     public class Swap
@@ -37,57 +39,113 @@ namespace sudoku
 
         private void calcScore()
         {
-            //calculate the new score for the row or col
-            //for a row the x is static and for col the y is static
-            y1s = calcSwap(y1, x1, v1, true);
-            x1s = calcSwap(x1, y1, v1, false);
-            y2s = calcSwap(y2, x2, v2, true);
-            x2s = calcSwap(x2, y2, v2, false);
-
+            calcSwap(x1, y1, x2, y2);
             int totalNew;
             int totalOld;
-            totalNew = x1s + y1s + x2s + y2s;
-            totalOld = ss.Rows[x1] + ss.Columns[y1] + ss.Rows[x2] + ss.Columns[y2];
-            score = totalNew - totalOld;
-        }
-        
-        private int calcSwap(int placeNew, int placeRowCol , int newValue, bool isColumn)
-        {
-            int count = 0;
-            HashSet<int> seen = new HashSet<int>();
-            if (isColumn)
+            
+            if (x1 == x2)
             {
-                for (int i = 0; i < 9; i++)
-                {
-                    if (i != placeNew)
-                    {
-                        if (seen.Add(ss._sudoku.Board[placeRowCol,i]))
-                        {
-                            count++;
-                        }
-                    }
-                }
+                totalNew = x1s + x2s + y2s;
+                totalOld = ss.Rows[y1] + ss.Rows[y2] + ss.Columns[x1];
+                
+            }
+            else if (y1 == y2)
+            {
+                totalNew = x1s + y1s + y2s;
+                totalOld = ss.Rows[y1] + ss.Columns[x1] + ss.Columns[x2];
             }
             else
             {
-                for (int i = 0; i < 9; i++)
+                totalNew = x1s + y1s + x2s + y2s;
+                totalOld = ss.Rows[y1] + ss.Rows[y2] + ss.Columns[x1] + ss.Columns[x2];
+            }
+            score = totalNew - totalOld;
+        }
+        private void calcSwap(int x1, int y1, int x2, int y2)
+        {
+            int count = 0;
+            //cols x1 (y1s)
+            HashSet<int> set = new HashSet<int>();
+            for (int i = 0; i < 9; i++)
+            {
+                int t = ss._sudoku.Board[x1, i];
+                if (i == y1)
                 {
-                    if (i != placeNew)
-                    {
-                        if (seen.Add(ss._sudoku.Board[i,placeRowCol]))
-                        {
-                            count++;
-                        }
-                    }
+                    if(set.Add(v1)) count++;
+                }
+                else if (i == y2 && x1 == x2)
+                {
+                    if (set.Add(v2)) count++;
+                }
+                else
+                {
+                    if (set.Add(t)) count++;
                 }
             }
+            y1s = 9 - count;
 
-            if (seen.Add(newValue))
+            //cols x2 (y2s)
+            count = 0;
+            set = new HashSet<int>();
+            for (int i = 0; i < 9; i++)
             {
-                count++;
+                int t = ss._sudoku.Board[x2, i];
+                if (i == y2)
+                {
+                    if(set.Add(v2)) count++;
+                }
+                else if (i == y1 && x1 == x2)
+                {
+                    if (set.Add(v1)) count++;
+                }
+                else
+                {
+                    if (set.Add(t)) count++;
+                }
             }
+            y2s = 9 - count;
+            
+            //rows y1 (x1s)
+            count = 0;
+            set = new HashSet<int>();
+            for (int i = 0; i < 9; i++)
+            {
+                int t = ss._sudoku.Board[i, y1];
+                if (i == x1)
+                {
+                    if(set.Add(v1)) count++;
+                }
+                else if (i == x2 && y1 == y2)
+                {
+                    if (set.Add(v2)) count++;
+                }
+                else
+                {
+                    if (set.Add(t)) count++;
+                }
+            }
+            x1s = 9 - count;
 
-            return 9 - count;
+            //rows y2 (x2s)
+            count = 0;
+            set = new HashSet<int>();
+            for (int i = 0; i < 9; i++)
+            {
+                int t = ss._sudoku.Board[i, y2];
+                if (i == x2)
+                {
+                    if(set.Add(v2)) count++;
+                }
+                else if (i == x1 && y1 == y2)
+                {
+                    if (set.Add(v1)) count++;
+                }
+                else
+                {
+                    if (set.Add(t)) count++;
+                }
+            }
+            x2s = 9 - count;
         }
 
         public void preformSwap()

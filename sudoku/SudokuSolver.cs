@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Runtime.Intrinsics;
 using System.Xml;
 
@@ -39,106 +40,67 @@ namespace sudoku
         }
         
         
-        public void RandomBlockSwap()
+        public int RandomBlockSwap()
         {
             //get random block x and y
             int blockX = random.Next(0, 3) * 3;
             int blockY = random.Next(0, 3) * 3;
-            int x1 = blockX + random.Next(0, 3);
-            int y1 = blockY + random.Next(0, 3);
-            int x2 = blockX + random.Next(0, 3);
-            int y2 = blockY + random.Next(0, 3);
-            /*
-            bool beter = false;
-            
-            while (!beter)
-            {
-                if (!_sudoku.Gefixeerd[x1, y1] && !_sudoku.Gefixeerd[x2, y2])
-                {
-                    Swap s = new Swap(x1, y1, x2, y2, this);
-                    if (s.score <= 0)
-                    {
-                        beter = true;
-                        s.preformSwap();
-                    }
-                    else
-                    {
-                        blockX = random.Next(0, 3) * 3;
-                        blockY = random.Next(0, 3) * 3;
-                        x1 = blockX + random.Next(0, 3);
-                        y1 = blockY + random.Next(0, 3);
-                        x2 = blockX + random.Next(0, 3);
-                        y2 = blockY + random.Next(0, 3);
-                    }
-                }
-            }*/
             
             //list for all possible swaps in block
-            List<Swap> swaps = new List<Swap>();
+            Swap s = null;
 
-            
+            int blockSize = 3;
 
-            
-            //calculate all possible x and y for the first number
-            for (int x = blockX; x < blockX + 3; x++)
+            for (int i = 0; i < blockSize * blockSize; i++)
             {
-                for (int y = blockY; y < blockY + 3; y++)
+                for (int j = i + 1; j < blockSize * blockSize; j++)
                 {
-                    //check if the number is not fixed
-                    if (!_sudoku.Gefixeerd[x,y])
-                    {
-                        //calculate all possible x and y for the second number
-                        for (int i = blockX; i < blockX + 3; i++)
+                    int x1 = i / blockSize + blockX;
+                    int y1 = i % blockSize + blockY;
+                    int x2 = j / blockSize + blockX;
+                    int y2 = j % blockSize + blockY;
+                    
+                    //Console.WriteLine($"Swap {x1} {y1} {x2} {y2} {blockX} {blockY}");
+                    
+                    if (!_sudoku.Gefixeerd[x1, y1] && !_sudoku.Gefixeerd[x2, y2])
+                    { 
+                        Swap temp = new Swap(x1, y1, x2, y2, this);
+                        if (s == null)
                         {
-                            for (int j = blockY; j < blockY + 3; j++)
+                            s = temp;
+                        }
+                        else
+                        {
+                            if (temp.score < s.score)
                             {
-                                //check if the second number is not fixed and if it is not the same as the first
-                                if (!_sudoku.Gefixeerd[i,j] && !(i == x && j == y))
-                                {
-                                    //add to possible swap
-                                    swaps.Add(new Swap(i, j, x, y, this));
-                                }
+                                s = temp;
                             }
                         }
                     }
                 }
             }
 
-            
-            //check if there is a better score than the current one
-            int swapIndex = -1;
-            int swapScore = 0;
-            for (int i = 0; i < swaps.Count; i++)
+            if (s.score <= 0)
             {
-                int score = swaps[i].score;
-                //update swap if same or equal to the current one
-                if (score <= swapScore)
-                {
-                    swapScore = score;
-                    swapIndex = i;
-                }
+                s.preformSwap();
+                return s.score;
             }
 
-            //if a swap has been found that is better or equal
-            if (swapIndex > -1)
-            {
-                Swap sw = swaps[swapIndex];
-                //Console.WriteLine($"{sw.x1},{sw.y1} | {sw.x2},{sw.y2} | {sw.score}");
-                sw.preformSwap();
-            }
-
-
+            return 0;
         }
 
         //preform a random swap for s times
-        public void randomWalk(int s)
+        public int randomWalk(int s)
         {
+            int diff = 0;
             while (s > 0)
             {
                 Swap swap = randomSwap();
                 swap.preformSwap();
                 s--;
+                diff += swap.score;
             }
+            return diff;
         }
 
         //prefor a valid random swap
@@ -147,7 +109,8 @@ namespace sudoku
             bool validSwap = false;
             Random random = new Random();
             Swap s = null;
-            while (!validSwap)
+            int swapCount = 0;
+            while (!validSwap && swapCount < 1000)
             {
                 //random block
                 int blockX = random.Next(0, 3) * 3;
@@ -172,7 +135,7 @@ namespace sudoku
                     //preform swap
                     s = new Swap(rX, rY, rX2, rY2, this);
                 }
-                
+                swapCount++;
             }
             
             return s;

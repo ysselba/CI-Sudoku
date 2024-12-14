@@ -34,15 +34,39 @@ namespace sudoku
          * 375|418|368
          *  
          */
+        
+        //pick test or bench mode and read input if necessary
         public static void Main(string[] args)
+        {
+            Console.WriteLine("Press t for test and b for benchmark");
+            char c = Console.ReadKey().KeyChar;
+            Console.WriteLine();
+            switch (c)
+            {
+                case 't':
+                    Console.WriteLine("What sudoku do you want to test?");
+                    mechanisme(Console.ReadLine().Split(' '), new List<int>(), new List<TimeSpan>(), new List<int>(), 1, 10, true);
+                    break;
+                case 'b':
+                    benchmark();
+                    break;
+                default:
+                    Console.WriteLine("Invalid key");
+                    break;
+            }
+
+        }
+        
+        //Preform a benchmark for multiple sudokus
+        public static void benchmark() 
         {
             //TODO: output in csv betand
             //test vars
             int sMin = 1;
-            int sMax = 5;
-            int plateauMin = 5;
-            int plateauMax = 15;
-            int testFreq = 10; //TODO: kijk even hoeveel kan
+            int sMax = 1;
+            int plateauMin = 10;
+            int plateauMax = 20;
+            int testFreq = 20; //TODO: kijk even hoeveel kan
             
             List<string> sudokus = new List<string>
             {
@@ -58,9 +82,9 @@ namespace sudoku
                 Console.WriteLine($"Test Frequency: {testFreq}");
                 testSudokus(s, sMin, sMax, plateauMin, plateauMax, testFreq);
             }
-
         }
-
+        
+        //test the sudoku solver for each possible S and Plateau combination
         public static void testSudokus(string input, int SMin, int SMax, int PlateauMin, int PlateauMax, int testFreq)
         {
             string[] list = input.Split(' ');
@@ -75,62 +99,60 @@ namespace sudoku
                 }
             }
         }
-
+        
+        //Preform a test for a S Plateau combination
         public static void testSudoku(string[] input, int S, int plateau, int testFreq)
         {
+            //init avrage lists for iterations, time and plateau
             List<int> gem = new List<int>();
             List<TimeSpan> gemTS = new List<TimeSpan>();
             List<int> gemPlateau = new List<int>();
             
+            //preform test testFreq times
             for (int i = 0; i < testFreq; i++)
             {
-                mechanisme(input, gem, gemTS, gemPlateau, S, plateau);
-                //Console.WriteLine($"Sudoku iteration: {i + 1}");
+                mechanisme(input, gem, gemTS, gemPlateau, S, plateau, false);
             }
 
+            //calculate avrage time
             TimeSpan gemTime = new TimeSpan(0);
             foreach (TimeSpan t in gemTS)
             {
                 gemTime += t;
             }
-            gemTime = gemTime / gemTS.Count;
+            gemTime /= gemTS.Count;
             
             Console.WriteLine($"Average amount of iterations: {gem.Average()}");
             Console.WriteLine($"Average Time spent per sudoku (HH:MM:SS): {gemTime}");
             Console.WriteLine($"Average amount of random walks: {gemPlateau.Average()}.");
         }
 
-        public static void mechanisme(string[] input, List<int> gem, List<TimeSpan> gemTS, List<int> gemPlateau, int S, int plateau)
+        public static void mechanisme(string[] input, List<int> gem, List<TimeSpan> gemTS, List<int> gemPlateau, int S, int plateau, bool testB)
         {
             DateTime datetimebegin = DateTime.Now;
             Sudoku s = new Sudoku(input);
             SudokuSolver ss = new SudokuSolver(s);
             int colSum = ss.Columns.Sum();
             int rowSum = ss.Rows.Sum();
+            int score = colSum + rowSum;
             
             int count = 0;
             int plateauCount = 0;
             int aantalkeerPlateau = 0;
             
-            while (colSum + rowSum != 0)
+            while (count < 9999999 && score > 0)
             {
-                ss.RandomBlockSwap();
-                
-                //gaat nog iets mis omdat het alleen maar groter wordt
-                int newColSum = ss.Columns.Sum();
-                int newRowSum = ss.Rows.Sum();
-                
-                if(newColSum + newRowSum == colSum + rowSum) plateauCount++;
-                else plateauCount = 0;
-                
+                int newScore = score + ss.RandomBlockSwap();
+                if(newScore == score) plateauCount++;
+                else
+                {
+                    plateauCount = 0;
+                    score = newScore;
+                }
                 count++;
-                
-                colSum = newColSum;
-                rowSum = newRowSum;
-                
                 if (plateauCount >= plateau)
                 {
-                    ss.randomWalk(S);
+                    score += ss.randomWalk(S);
                     aantalkeerPlateau++;
                     plateauCount = 0;
                 }
@@ -138,6 +160,25 @@ namespace sudoku
             gem.Add(count);
             gemTS.Add(DateTime.Now - datetimebegin);
             gemPlateau.Add(aantalkeerPlateau);
+
+            if (testB)
+            {
+                Console.WriteLine($"Iterations: {count}");
+                Console.WriteLine($"Calculation time: {DateTime.Now - datetimebegin}");
+                Console.WriteLine($"Plateau Count: {aantalkeerPlateau}");
+                s.Print();
+                for (int i = 0; i < 9; i++)
+                {
+                    int[] c = new int[9];
+                    int[] r = new int[9];
+                    for (int j = 0; j < 9; j++)
+                    {
+                        c[j] = s.Board[i, j];
+                        r[j] = s.Board[j, i];
+                    }
+                    Console.WriteLine($"c: {9 - c.Distinct().Count()}, r: {9 - r.Distinct().Count()}");
+                }
+            }
         }
     }
 }
