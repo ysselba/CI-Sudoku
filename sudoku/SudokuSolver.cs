@@ -45,25 +45,24 @@ namespace sudoku
             //get random block x and y
             int blockX = random.Next(0, 3) * 3;
             int blockY = random.Next(0, 3) * 3;
-            
-            //list for all possible swaps in block
+            //init best swap
             Swap s = null;
-
             int blockSize = 3;
-
+            //loop through all possible swaps
             for (int i = 0; i < blockSize * blockSize; i++)
             {
                 for (int j = i + 1; j < blockSize * blockSize; j++)
                 {
+                    //1D to 2D
                     int x1 = i / blockSize + blockX;
                     int y1 = i % blockSize + blockY;
                     int x2 = j / blockSize + blockX;
                     int y2 = j % blockSize + blockY;
                     
-                    //Console.WriteLine($"Swap {x1} {y1} {x2} {y2} {blockX} {blockY}");
-                    
+                    //check if one of the numbers is fixed
                     if (!_sudoku.Gefixeerd[x1, y1] && !_sudoku.Gefixeerd[x2, y2])
                     { 
+                        //swap if score is better
                         Swap temp = new Swap(x1, y1, x2, y2, this);
                         if (s == null)
                         {
@@ -80,6 +79,7 @@ namespace sudoku
                 }
             }
 
+            //if the score stayed the same or decreased preform the swap
             if (s.score <= 0)
             {
                 s.preformSwap();

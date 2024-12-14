@@ -39,10 +39,12 @@ namespace sudoku
 
         private void calcScore()
         {
+            //update new scores based on swap
             calcSwap(x1, y1, x2, y2);
             int totalNew;
             int totalOld;
             
+            //check how many rows and columns are effected
             if (x1 == x2)
             {
                 totalNew = x1s + x2s + y2s;
@@ -61,6 +63,9 @@ namespace sudoku
             }
             score = totalNew - totalOld;
         }
+        
+        //calculate the new values for each row and col
+        //checks for same row different col and the other way around
         private void calcSwap(int x1, int y1, int x2, int y2)
         {
             int count = 0;

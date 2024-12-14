@@ -18,18 +18,16 @@ namespace sudoku
             bool[,,] used2 = new bool[3,3,9];
             for (int i = 0; i < stringInput.Length; i++)
             {
-                //x en y coord in 9x9
+                //x and y coord in 9x9
                 int x = i % 9;
                 int y = i / 9;
-                //x en y coord in 3x3
+                //x and y coord in 3x3
                 int x3x3 = x / 3;
                 int y3x3 = y / 3;
-                
-                //waarde cel en bool die kijkt of er een nieuwe waarde moet komen
+                //check if is fixed or new value needs to be created
                 int n = int.Parse(stringInput[i]);
                 bool gefixeerd = n != 0;
-
-                //voeg toe
+                //Add new value if fixed
                 if (gefixeerd)
                 {
                     used2[x3x3, y3x3, n - 1] = gefixeerd;
@@ -38,7 +36,7 @@ namespace sudoku
                 Board[x, y] = n;
             }
             
-            //voor niet gefixeerde items pas waarde aan die niet in used staat
+            //for all non fixed positions create a block unique digit
             for (int x = 0; x < 9; x++)
             {
                 for (int y = 0; y < 9; y++)
@@ -60,7 +58,7 @@ namespace sudoku
             }
         }
         
-        //print de sudoku in de console
+        //fancy print for sudoku
         public void Print()
         {
             for (int y = 0; y < 9; y++)
