@@ -35,9 +35,9 @@ namespace sudoku
             //test vars
             int sMin = 1;
             int sMax = 4;
-            int plateauMin = 10;
-            int plateauMax = 20;
-            int testFreq = 100;
+            int plateauMin = 5;
+            int plateauMax = 15;
+            int testFreq = 20;
             WriterCSV writer = new WriterCSV();
 
             //benchmark sudokus
